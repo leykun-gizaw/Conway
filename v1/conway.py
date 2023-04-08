@@ -1,9 +1,7 @@
 import tkinter as tk
 from neibors import neibors_tupple
-from printer import prntr
-from copy import deepcopy
 
-CELLS = 50
+CELLS = 20
 MARGIN = 40
 SIDE = 20
 WIDTH = HEIGHT = 2 * MARGIN + CELLS * SIDE
@@ -16,11 +14,11 @@ root.geometry(f"{WIDTH}x{HEIGHT + 40}")
 matrix = [[tk.BooleanVar() for _ in range(CELLS)] for _ in range(CELLS)]
 
 # Frame widget #
-frame = tk.Frame(master=root, relief=tk.SUNKEN, borderwidth=2)
+frame = tk.Frame(master=root, borderwidth=2)
 frame.pack()
 
 # Canvas widget #
-canvas = tk.Canvas(master=frame, height=HEIGHT, width=WIDTH)
+canvas = tk.Canvas(master=frame, height=HEIGHT, width=WIDTH, background="grey")
 canvas.pack(side=tk.TOP, fill=tk.BOTH)
 
 
@@ -38,6 +36,11 @@ def reset():
     matrix[3][2].set(False)
     matrix[3][1].set(False)
     matrix[1][2].set(False)
+
+    matrix[18][18].set(False)
+    matrix[18][19].set(False)
+    matrix[19][18].set(False)
+    matrix[19][19].set(False)
     draw(False)
 
 
