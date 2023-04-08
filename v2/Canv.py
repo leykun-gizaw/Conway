@@ -12,6 +12,13 @@ class CellsCanvas(tk.Canvas):
         super().__init__(parent, width=canvasWidth, height=canvasHeight, bg=background)
         self.__initUI()
 
+    def makeCells(self, cellWidth, cellHeight, rows, columns):
+        """Method creates cells of the given size"""
+        self.cells = [
+            [Cell(cellWidth, cellHeight, tk.BooleanVar()) for _ in range(columns)]
+            for _ in range(rows)
+        ]
+
     def __initUI(self):
         """Draw canvas on screen"""
         self.grid(row=0, column=0)
