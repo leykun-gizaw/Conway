@@ -15,24 +15,26 @@ class CellsCanvas(tk.Canvas):
         background: str,
     ) -> None:
         """Initialize object with values"""
-        canvasWidth, canvasHeight = columns * cellSize, rows * cellSize
+        self.cells = []
+        canvasWidth, canvasHeight = columns * cellSize + 10, rows * cellSize + 10
         super().__init__(parent, width=canvasWidth, height=canvasHeight, bg=background)
         self.__makeCells(cellSize, rows, columns)
         self.__initUI()
 
-    def __makeCells(self, side: int, rows: int, columns: int):
+    def __makeCells(self, side: int, rows: int, columns: int) -> None:
         """Method creates cells of the given size"""
-        self.cells = [
-            [Cell(self, side, posx, posy, tk.BooleanVar()) for posx in range(columns)]
-            for posy in range(rows)
-        ]
+        for posy in range(rows):
+            for posx in range(columns):
+                fillVar = tk.BooleanVar()
+                fillVar.set(True)
+                self.cells.append(Cell(self, side, posx, posy, fillVar))
 
-    def __initUI(self):
+    def __initUI(self) -> None:
         """Draw canvas on screen"""
         self.pack()
 
 
 if __name__ == "__main__":
     parent = tk.Tk()
-    canvas = CellsCanvas(parent, 20, 18, 8, "grey")
+    canvas = CellsCanvas(parent, 30, 20, 20, "grey")
     parent.mainloop()
