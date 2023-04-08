@@ -1,5 +1,6 @@
 """Module defines the Canv class"""
 import tkinter as tk
+from Cell import Cell
 
 
 class CellsCanvas(tk.Canvas):
@@ -12,11 +13,14 @@ class CellsCanvas(tk.Canvas):
         super().__init__(parent, width=canvasWidth, height=canvasHeight, bg=background)
         self.__initUI()
 
-    def makeCells(self, cellWidth, cellHeight, rows, columns):
+    def makeCells(self, width, height, rows, columns):
         """Method creates cells of the given size"""
         self.cells = [
-            [Cell(cellWidth, cellHeight, tk.BooleanVar()) for _ in range(columns)]
-            for _ in range(rows)
+            [
+                Cell(self, width, height, posx, posy, tk.BooleanVar())
+                for posx in range(columns)
+            ]
+            for posy in range(rows)
         ]
 
     def __initUI(self):
@@ -27,4 +31,5 @@ class CellsCanvas(tk.Canvas):
 if __name__ == "__main__":
     parent = tk.Tk()
     canvas = CellsCanvas(parent, 400, 400, "grey")
+    canvas.makeCells(40, 40, 8, 8)
     parent.mainloop()
