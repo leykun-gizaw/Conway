@@ -8,11 +8,19 @@ class Cell:
     def __init__(
         self,
         canvas: tk.Canvas,
-        width: int,
-        height: int,
+        side: int,
         posx: int,
         posy: int,
         fillVar: tk.BooleanVar,
     ):
         """Initialze object with values"""
-        canvas.create_rectangle(posx * 40, posy * 40, (posx + 1) * 40, (posy + 1) * 40)
+        self.fill = "white" if fillVar.get() == True else "black"
+        self.outline = "white" if fillVar.get() == False else "black"
+        canvas.create_rectangle(
+            posx * side,
+            posy * side,
+            (posx + 1) * side,
+            (posy + 1) * side,
+            fill=self.fill,
+            outline=self.outline,
+        )
