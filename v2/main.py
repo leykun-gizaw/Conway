@@ -5,7 +5,7 @@ from Cell import Cell
 
 parent = tk.Tk()
 frame = tk.Frame(parent, padx=10, pady=10, relief=tk.SUNKEN)
-canvas = CellsCanvas(frame, side=20, filePath="./patterns/0.grid")
+canvas = CellsCanvas(frame, side=20, filePath="./patterns/glider.csv")
 frame.pack()
 
 
@@ -36,6 +36,8 @@ def flip():
     canvas.after(10, flip)
 
 
-tk.Button(parent, text="FLIP", command=flip).pack()
+flip()
+
+# tk.Button(parent, text="FLIP", command=flip).pack()
 
 parent.mainloop()
