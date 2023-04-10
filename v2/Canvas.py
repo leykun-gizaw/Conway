@@ -2,6 +2,7 @@
 import tkinter as tk
 from Cell import Cell
 from typing import List
+import csv
 
 
 class CellsCanvas(tk.Canvas):
@@ -50,21 +51,13 @@ class CellsCanvas(tk.Canvas):
         Returns:
             Constructed matrix representation of the grid
         """
-        matrix: List[str] = []
+        matrix: List[List[bool]] = []
         # Read by stripping newline character from file
         with open(filePath, "r") as file:
-            line = file.readline()
-            while line:
-                lastLine = file.readline()
-                if lastLine:
-                    matrix.append(line[:-1])
-                else:
-                    matrix.append(line)
-                line = lastLine
-        return [
-            [True if matrix[r][c] == "0" else False for c in range(len(matrix[r]))]
-            for r in range(len(matrix))
-        ]
+            lst = csv.reader(file, delimiter=",")
+            for row in lst:
+                matrix.append([True if elem == "0" else False for elem in row])
+        return matrix
 
     def __neighbours(self, row: int, col: int) -> set[Cell]:
         """Returns a set of neighbours' fill variable for a particular cell
