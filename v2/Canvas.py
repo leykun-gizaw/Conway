@@ -66,8 +66,32 @@ class CellsCanvas(tk.Canvas):
             for r in range(len(matrix))
         ]
 
-    def __neighbours(self):
-        """Returns a set of neighbour fill variables"""
+    def __neighbours(self, row: int, col: int) -> set[Cell]:
+        """Returns a set of neighbours' fill variable for a particular cell
+
+        Args:
+            `row`: Row position of current cell
+            `col`: Column position of current cell
+
+        Returns:
+            Set of neighbours selected from the `cells` matrix
+        """
+        validIndices = {
+            "n": [row - 1, col],
+            "s": [row + 1, col],
+            "e": [row, col + 1],
+            "w": [row, col - 1],
+            "ne": [row - 1, col + 1],
+            "nw": [row - 1, col - 1],
+            "se": [row + 1, col + 1],
+            "sw": [row + 1, col - 1],
+        }
+
+        neibors = set()
+        for _, v in validIndices.items():
+            if v[0] >= 0 and v[1] >= 0 and v[0] < self.__rows and v[1] < self.__columns:
+                neibors.add(self.__cells[v[0]][v[1]])
+        return neibors
 
     def __makeCells(self) -> None:
         """Create a cells matrix by reading the grid matrix"""
@@ -78,6 +102,9 @@ class CellsCanvas(tk.Canvas):
                 fillVar.set(self.__gridMatrix[posy][posx])
                 cellsRow.append(Cell(self, self.__side, posx, posy, fillVar))
             self.__cells.append(cellsRow)
+        for row in range(self.__rows):
+            for col in range(self.__columns):
+                self.__cells[row][col].neighbours = self.__neighbours(row, col)
 
     def __initUI(self) -> None:
         """Draw canvas on screen"""
