@@ -1,7 +1,7 @@
 import tkinter as tk
 from neibors import neibors_tupple
 
-CELLS = 20
+CELLS = 40
 MARGIN = 40
 SIDE = 20
 WIDTH = HEIGHT = 2 * MARGIN + CELLS * SIDE
@@ -37,10 +37,10 @@ def reset():
     matrix[3][1].set(False)
     matrix[1][2].set(False)
 
-    matrix[18][18].set(False)
-    matrix[18][19].set(False)
-    matrix[19][18].set(False)
-    matrix[19][19].set(False)
+    matrix[38][38].set(False)
+    matrix[38][39].set(False)
+    matrix[39][38].set(False)
+    matrix[39][39].set(False)
     draw(False)
 
 
@@ -56,10 +56,11 @@ def draw(rst=True):
             canvas.create_rectangle(
                 col * SIDE + MARGIN,
                 row * SIDE + MARGIN,
-                (col+1) * SIDE + MARGIN,
-                (row+1) * SIDE + MARGIN,
+                (col + 1) * SIDE + MARGIN,
+                (row + 1) * SIDE + MARGIN,
                 fill=fill,
-                outline=outline)
+                outline=outline,
+            )
 
 
 # Redraw after rules have been applied #
@@ -79,7 +80,7 @@ def play():
     for row, col in blacks:
         matrix[row][col].set(False)
     draw(False)
-    canvas.after(100, play)
+    canvas.after(10, play)
 
 
 # Initial button draw widget #
