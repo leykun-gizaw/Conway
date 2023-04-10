@@ -14,13 +14,51 @@ class Cell:
         fillVar: tk.BooleanVar,
     ):
         """Initialze object with values"""
-        self.fill = "white" if fillVar.get() == True else "black"
-        self.outline = "white" if fillVar.get() == False else "black"
-        canvas.create_rectangle(
-            posx * side,
-            posy * side,
-            (posx + 1) * side,
-            (posy + 1) * side,
-            fill=self.fill,
-            outline=self.outline,
+        self.__setFill(fillVar)
+        self.__setOutline()
+        self.__fillVar = fillVar
+        self.__canvas = canvas
+        self.__cell = canvas.create_rectangle(
+            posx * side + 6,
+            posy * side + 6,
+            (posx + 1) * side + 6,
+            (posy + 1) * side + 6,
+            fill=self.__fill,
+            outline=self.__outline,
         )
+
+    @property
+    def fillVar(self):
+        """Returns the fill variable of current cell"""
+        return self.__fillVar
+
+    @fillVar.setter
+    def fillVar(self, fillVar: tk.BooleanVar):
+        """Updates the cell's fill value
+
+        Args:
+            `fillVar`: Variable representing what the fill should be
+
+        Returns:
+            None
+        """
+
+        self.__setFill(fillVar)
+        self.__setOutline()
+        self.__fillVar = fillVar
+        self.__canvas.itemconfig(self.__cell, fill=self.__fill, outline=self.__outline)
+
+    def __setFill(self, fillVar: tk.BooleanVar):
+        """Method configures fill value according to passed boolean variable
+
+        Args:
+            `fillVar`: Variable representing what the fill should be
+
+        Returns:
+            None
+        """
+        self.__fill = "white" if fillVar.get() == True else "black"
+
+    def __setOutline(self):
+        """Method configures fill value according to passed boolean variable"""
+        self.__outline = "white" if self.__fill == "black" else "black"
