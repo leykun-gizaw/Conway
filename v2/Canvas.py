@@ -38,7 +38,7 @@ class CellsCanvas(tk.Canvas):
         self.__gridMatrix = self.__readMatrix(filePath)
         self.__rows = len(self.__gridMatrix)
         self.__columns = len(self.__gridMatrix[0])
-        self.__initUI()
+        self.__drawCanvas()
 
     def __readMatrix(self, filePath: str) -> List[list[bool]]:
         """Method reads a file to construct cells grid
@@ -99,7 +99,7 @@ class CellsCanvas(tk.Canvas):
             for col in range(self.__columns):
                 self.__cells[row][col].neighbours = self.__neighbours(row, col)
 
-    def __initUI(self) -> None:
+    def __drawCanvas(self) -> None:
         """Draw canvas on screen"""
         canvasWidth, canvasHeight = (
             self.__columns * self.__side + 10,

@@ -5,7 +5,7 @@ from Cell import Cell
 
 parent = tk.Tk()
 frame = tk.Frame(parent, padx=10, pady=10, relief=tk.SUNKEN)
-canvas = CellsCanvas(frame, side=20, filePath="./patterns/glider.csv")
+canvas = CellsCanvas(frame, side=20, filePath="./patterns/gosper_gun.csv")
 frame.pack()
 
 
@@ -33,11 +33,9 @@ def flip():
     for row in range(len(canvas.getCells)):
         for col in range(len(canvas.getCells[0])):
             canvas.getCells[row][col].fillVar = newGen[row][col]
-    canvas.after(10, flip)
+    canvas.after(100, flip)
 
 
-flip()
-
-# tk.Button(parent, text="FLIP", command=flip).pack()
+tk.Button(parent, text="FLIP", command=flip).pack()
 
 parent.mainloop()
