@@ -33,7 +33,7 @@ class Cell:
         return self.__fillVar
 
     @fillVar.setter
-    def fillVar(self, fillVar: tk.BooleanVar):
+    def fillVar(self, fillVar: tk.BooleanVar) -> None:
         """Updates the cell's fill value
 
         Args:
@@ -48,7 +48,16 @@ class Cell:
         self.__fillVar = fillVar
         self.__canvas.itemconfig(self.__cell, fill=self.__fill, outline=self.__outline)
 
-    def __setFill(self, fillVar: tk.BooleanVar):
+    @property
+    def neighbours(self) -> set:
+        """Return the set of neighbours constructed"""
+        return self.__neighbours
+
+    @neighbours.setter
+    def neighbours(self, neighbours: set) -> None:
+        self.__neighbours = neighbours
+
+    def __setFill(self, fillVar: tk.BooleanVar) -> None:
         """Method configures fill value according to passed boolean variable
 
         Args:
@@ -59,6 +68,6 @@ class Cell:
         """
         self.__fill = "white" if fillVar.get() == True else "black"
 
-    def __setOutline(self):
+    def __setOutline(self) -> None:
         """Method configures fill value according to passed boolean variable"""
         self.__outline = "white" if self.__fill == "black" else "black"

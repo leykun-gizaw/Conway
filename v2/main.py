@@ -19,7 +19,10 @@ def flip():
     for row in range(len(canvas.getCells)):
         for col in range(len(canvas.getCells[0])):
             canvas.getCells[row][col].fillVar = newGen[row][col]
-    canvas.after(10, flip)
+    print(canvas.getCells[0][0].neighbours)
+    print(canvas.getCells[0][1].neighbours)
+    print(canvas.getCells[1][1].neighbours)
+    # canvas.after(10, flip)
 
 
 tk.Button(parent, text="FLIP", command=flip).pack()
