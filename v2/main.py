@@ -2,11 +2,13 @@
 import tkinter as tk
 from Canvas import CellsCanvas
 from Cell import Cell
+from time import sleep
 
 parent = tk.Tk()
-frame = tk.Frame(parent, padx=10, pady=10, relief=tk.SUNKEN)
-canvas = CellsCanvas(frame, side=20, filePath="./patterns/gosper_gun.csv")
-frame.pack()
+gridFrame = tk.Frame(parent, padx=10, pady=10, relief=tk.RAISED, background="white")
+canvas = CellsCanvas(gridFrame, side=20, filePath="./patterns/gosper_gun.csv")
+gridFrame.pack(side=tk.LEFT, expand=True, fill=tk.BOTH)
+stop = False
 
 
 def flip():
@@ -33,9 +35,25 @@ def flip():
     for row in range(len(canvas.getCells)):
         for col in range(len(canvas.getCells[0])):
             canvas.getCells[row][col].fillVar = newGen[row][col]
-    canvas.after(100, flip)
+    if not stop:
+        canvas.after(1, flip)
 
 
-tk.Button(parent, text="FLIP", command=flip).pack()
+def changeStop(val: bool) -> None:
+    global stop
+    stop = val
+    if not stop:
+        flip()
+
+
+controlsFrame = tk.Frame(parent, padx=10, pady=10, relief=tk.RAISED)
+tk.Button(controlsFrame, text="START/NEXT", command=flip).pack(side=tk.LEFT, expand=True)
+tk.Button(controlsFrame, text="CONTINUE", command=lambda: changeStop(False)).pack(
+    side=tk.LEFT, expand=True
+)
+tk.Button(controlsFrame, text="STOP", command=lambda: changeStop(True)).pack(
+    side=tk.LEFT, expand=True
+)
+controlsFrame.pack(side=tk.RIGHT)
 
 parent.mainloop()
